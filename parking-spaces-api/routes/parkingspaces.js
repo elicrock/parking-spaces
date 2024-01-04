@@ -5,13 +5,13 @@ const {
   createParking,
   updateParkingById,
   getParkingById,
-  deleteParking,
+  deleteParkingById,
 } = require('../controllers/parkingspaces');
 
 router.get('/', getParkings);
 router.post('/', createParking);
 router.get('/:id', getParkingById);
-router.put('/:id', updateParkingById);
-router.delete('/:id', deleteParking);
+router.patch('/:id', updateParkingById);
+router.delete('/:id', deleteParkingById);
 
 module.exports = router;

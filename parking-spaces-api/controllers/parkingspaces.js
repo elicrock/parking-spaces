@@ -29,10 +29,20 @@ const getParkingById = (req, res, next) => {
 };
 
 const updateParkingById = (req, res, next) => {
-  ParkingSpace.findByIdAndUpdate(req.params.id, req.body, {
-    new: true, runValidators: true, overwrite: true,
-  })
+  const parkingId = req.params.id;
+  const oldParking = req.body;
+
+  ParkingSpace.findById(parkingId)
     .orFail(new NotFoundError('Парковочное пространство с указанным id не найдено!'))
+    .then(() => {
+      if (oldParking.availability !== 'conditionalFree') {
+        oldParking.$unset = { schedule: 1 };
+      }
+
+      return ParkingSpace.findByIdAndUpdate(parkingId, oldParking, {
+        new: true, runValidators: true,
+      });
+    })
     .then((parking) => res.send(parking))
     .catch((err) => {
       if (err instanceof ValidationError) {
@@ -42,14 +52,34 @@ const updateParkingById = (req, res, next) => {
     });
 };
 
-const deleteParking = (req, res, next) => {
-
+const deleteParkingById = (req, res, next) => {
+  ParkingSpace.findByIdAndDelete(req.params.id)
+    .orFail(new NotFoundError('Парковочное пространство с указанным id не найдено!'))
+    .then((parking) => res.send(parking))
+    .catch((err) => {
+      if (err instanceof CastError) {
+        return next(new BadRequestError('Передан некорректный id при удалении парковочного пространства!'));
+      }
+      return next(err);
+    });
 };
+
+// const deleteParkingById = (req, res, next) => {
+//   ParkingSpace.findById(req.params.id)
+//     .orFail(new NotFoundError('Парковочное пространство с указанным id не найдено!'))
+//     .then((parking) => ParkingSpace.deleteOne(parking).then(() => res.send(parking)))
+//     .catch((err) => {
+//       if (err instanceof CastError) {
+//         return next(new BadRequestError('Передан некорректный id при удалении парковочного пространства!'));
+//       }
+//       return next(err);
+//     });
+// };
 
 module.exports = {
   getParkings,
   createParking,
   getParkingById,
   updateParkingById,
-  deleteParking,
+  deleteParkingById,
 };
