@@ -6,7 +6,7 @@ const {
   updateParkingById,
   getParkingById,
   deleteParkingById,
-} = require('../controllers/parkingspaces');
+} = require('../controllers/parkingSpaces');
 
 router.get('/', getParkings);
 router.post('/', createParking);

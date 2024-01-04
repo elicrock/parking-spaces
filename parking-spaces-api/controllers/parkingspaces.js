@@ -64,18 +64,6 @@ const deleteParkingById = (req, res, next) => {
     });
 };
 
-// const deleteParkingById = (req, res, next) => {
-//   ParkingSpace.findById(req.params.id)
-//     .orFail(new NotFoundError('Парковочное пространство с указанным id не найдено!'))
-//     .then((parking) => ParkingSpace.deleteOne(parking).then(() => res.send(parking)))
-//     .catch((err) => {
-//       if (err instanceof CastError) {
-//         return next(new BadRequestError('Передан некорректный id при удалении парковочного пространства!'));
-//       }
-//       return next(err);
-//     });
-// };
-
 module.exports = {
   getParkings,
   createParking,
