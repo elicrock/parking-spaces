@@ -1,8 +1,5 @@
 const router = require('express').Router();
 const NotFoundError = require('../errors/NotFoundError');
-// const { login, createUser, logout } = require('../controllers/users');
-
-// const { validateCreateUser, validatelogin } = require('../middlewares/validation');
 
 const parkingRouter = require('./parkingspaces');
 
