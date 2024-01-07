@@ -1,0 +1,17 @@
+.parking__add-btn {
+  width: fit-content;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #535353;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  transition: opacity 0.3s;
+}
+
+.parking__add-btn:hover {
+  opacity: 0.7;
+}
