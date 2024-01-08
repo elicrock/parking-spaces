@@ -7,17 +7,25 @@ const parkingSpaceSchema = new mongoose.Schema(
     latitude: { type: String, required: true },
     longitude: { type: String, required: true },
     maxPlaces: { type: Number, required: true },
-    locationType: { type: String, enum: ['linear', 'areal'], required: true },
-    ownership: { type: String, enum: ['municipal', 'private'], required: true },
+    locationType: {
+      type: String,
+      enum: ['Линейное', 'Площадное'],
+      required: true,
+    },
+    ownership: {
+      type: String,
+      enum: ['Муниципальное', 'Частное'],
+      required: true,
+    },
     availability: {
       type: String,
-      enum: ['paid', 'free', 'conditionalFree'],
+      enum: ['Платное', 'Бесплатное', 'Условно бесплатное'],
       required: true,
     },
     schedule: {
       type: String,
       required() {
-        return this.availability === 'conditionalFree';
+        return this.availability === 'Условно бесплатное';
       },
     },
   },

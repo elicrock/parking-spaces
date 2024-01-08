@@ -3,7 +3,7 @@ const NotFoundError = require('../errors/NotFoundError');
 
 const parkingRouter = require('./parkingspaces');
 
-router.use('/parking', parkingRouter);
+router.use('/parkings', parkingRouter);
 
 router.use((req, res, next) => next(new NotFoundError('Страница не найдена!')));
 

@@ -15,7 +15,11 @@ const createParking = (req, res, next) => {
     .then((parking) => res.status(CREATED_STATUS).send(parking))
     .catch((err) => {
       if (err instanceof ValidationError) {
-        return next(new BadRequestError('Переданы некорректные данные при создании парковочного пространства!'));
+        return next(
+          new BadRequestError(
+            'Переданы некорректные данные при создании парковочного пространства!',
+          ),
+        );
       }
       return next(err);
     });
@@ -23,7 +27,9 @@ const createParking = (req, res, next) => {
 
 const getParkingById = (req, res, next) => {
   ParkingSpace.findById(req.params.id)
-    .orFail(new NotFoundError('Парковочное пространство с указанным id не найдено!'))
+    .orFail(
+      new NotFoundError('Парковочное пространство с указанным id не найдено!'),
+    )
     .then((parking) => res.send(parking))
     .catch(next);
 };
@@ -33,20 +39,27 @@ const updateParkingById = (req, res, next) => {
   const oldParking = req.body;
 
   ParkingSpace.findById(parkingId)
-    .orFail(new NotFoundError('Парковочное пространство с указанным id не найдено!'))
+    .orFail(
+      new NotFoundError('Парковочное пространство с указанным id не найдено!'),
+    )
     .then(() => {
-      if (oldParking.availability !== 'conditionalFree') {
+      if (oldParking.availability !== 'Условно бесплатное') {
         oldParking.$unset = { schedule: 1 };
       }
 
       return ParkingSpace.findByIdAndUpdate(parkingId, oldParking, {
-        new: true, runValidators: true,
+        new: true,
+        runValidators: true,
       });
     })
     .then((parking) => res.send(parking))
     .catch((err) => {
       if (err instanceof ValidationError) {
-        return next(new BadRequestError('Переданы некорректные данные при изменении парковочного пространства!'));
+        return next(
+          new BadRequestError(
+            'Переданы некорректные данные при изменении парковочного пространства!',
+          ),
+        );
       }
       return next(err);
     });
@@ -54,11 +67,17 @@ const updateParkingById = (req, res, next) => {
 
 const deleteParkingById = (req, res, next) => {
   ParkingSpace.findByIdAndDelete(req.params.id)
-    .orFail(new NotFoundError('Парковочное пространство с указанным id не найдено!'))
+    .orFail(
+      new NotFoundError('Парковочное пространство с указанным id не найдено!'),
+    )
     .then((parking) => res.send(parking))
     .catch((err) => {
       if (err instanceof CastError) {
-        return next(new BadRequestError('Передан некорректный id при удалении парковочного пространства!'));
+        return next(
+          new BadRequestError(
+            'Передан некорректный id при удалении парковочного пространства!',
+          ),
+        );
       }
       return next(err);
     });
