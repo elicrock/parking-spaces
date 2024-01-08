@@ -1,10 +1,12 @@
 import './ParkingSpaceItem.css';
 
-function ParkingSpaceItem() {
+function ParkingSpaceItem({ parkingSpace, handleItemClick, isActive }) {
   return (
-    <li className="parking-spaces__item">
-      <h3>Название парковочного пространства</h3>
-      {/* тут будут ещё данные о парковочном пространстве */}
+    <li
+      className={`parking-spaces__item ${isActive ? 'parking-spaces__item_active' : ''}`}
+      onClick={() => handleItemClick(parkingSpace)}
+    >
+      <h3 className="parking-spaces__title">{parkingSpace.name}</h3>
     </li>
   );
 }

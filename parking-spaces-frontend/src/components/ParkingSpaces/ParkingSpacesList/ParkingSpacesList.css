@@ -1,0 +1,49 @@
+.parking-spaces__contrainer {
+  display: flex;
+  background-color: #535353;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: #fff;
+  max-height: 360px;
+  min-height: 360px;
+  align-items: stretch;
+}
+
+.parking-spaces__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
+  flex: 1;
+  width: 40%;
+}
+
+.parking-spaces__list {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f2f2f2;
+}
+
+.parking-spaces__list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.parking-spaces__list::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+.parking-spaces__list::-webkit-scrollbar-track {
+  background-color: #f2f2f2;
+}
+
+.parking-spaces__all-items {
+  position: sticky;
+  top: 0;
+  background: #535353;
+  border-bottom: 4px solid #fff;
+  border-top-left-radius: 5px;
+  overflow: hidden;
+}
+
+.parking-spaces__all-items_active {
+  background-color: #a3a3a3;
+}

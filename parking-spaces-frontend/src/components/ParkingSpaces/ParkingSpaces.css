@@ -1,0 +1,9 @@
+.parking-spaces {
+  display: flex;
+  flex-direction: column;
+}
+
+.parking-spaces__empty {
+  margin: 0;
+  color: #fff;
+}

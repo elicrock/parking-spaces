@@ -1,9 +1,9 @@
+import './CreateParkingSpace.css';
 import useTogglePopup from '../../hooks/useTogglePopup';
 import Modal from '../Modal/Modal';
-import './CreateParkingSpace.css';
 import CreateParkingSpaceForm from './CreateParkingSpaceForm/CreateParkingSpaceForm';
 
-function CreateParkingSpace() {
+function CreateParkingSpace({ setSelectedSpace }) {
   const { showModal, handleCloseModal, handleOpenModal } = useTogglePopup();
   return (
     <>
@@ -16,7 +16,7 @@ function CreateParkingSpace() {
         handleCloseModal={handleCloseModal}
         handleOpenModal={handleOpenModal}
       >
-        <CreateParkingSpaceForm onClose={handleCloseModal} />
+        <CreateParkingSpaceForm onClose={handleCloseModal} setSelectedSpace={setSelectedSpace} />
       </Modal>
     </>
   );

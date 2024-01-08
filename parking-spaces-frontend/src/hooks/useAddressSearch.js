@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { debounce } from 'lodash';
-import { searchAddress } from '../Api/apiNominatim';
+import { searchAddress } from '../Api/nominatimApi';
 
 const useAddressSearch = (selectedAddressFromHint, onCoordinatesFetched) => {
   const [isHintAddress, setHintAddress] = useState([]);

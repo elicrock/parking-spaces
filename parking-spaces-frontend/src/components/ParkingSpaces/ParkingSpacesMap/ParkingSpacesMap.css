@@ -1,0 +1,18 @@
+.parking-spaces__map {
+  background: #fff;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  min-height: 350px;
+  width: 100%;
+}
+
+.parking-spaces__popup-title {
+  margin: 0;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.leaflet-attribution-flag {
+  display: none !important;
+}

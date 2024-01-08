@@ -1,0 +1,88 @@
+.parking-spaces__details {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 60%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f2f2f2;
+}
+
+.parking-spaces__details::-webkit-scrollbar {
+  width: 10px;
+}
+
+.parking-spaces__details::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+.parking-spaces__details::-webkit-scrollbar-track {
+  background-color: #f2f2f2;
+}
+
+.parking-spaces__details-title {
+  margin: 0;
+  font-size: 22px;
+}
+
+.parking-spaces__details-text {
+  margin: 0;
+  font-size: 18px;
+  color: #a9a9a9;
+}
+
+.parking-spaces__details-text span {
+  font-weight: bold;
+  color: #fff;
+}
+
+.parking-spaces__details-coordinates {
+  display: flex;
+  gap: 20px;
+}
+
+.parking-spaces__details-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.parking-spaces__edit-btn,
+.parking-spaces__delete-btn,
+.parking-spaces__cancel-btn {
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  transition: background 0.2s;
+}
+
+.parking-spaces__edit-btn {
+  background: #28a745;
+}
+
+.parking-spaces__edit-btn:hover {
+  background: #218838;
+}
+
+.parking-spaces__delete-btn {
+  background: #c43644;
+}
+
+.parking-spaces__delete-btn:hover {
+  background: #c82333;
+}
+
+.parking-spaces__cancel-btn {
+  background: #6c757d;
+}
+
+.parking-spaces__cancel-btn:hover {
+  background: #495057;
+}

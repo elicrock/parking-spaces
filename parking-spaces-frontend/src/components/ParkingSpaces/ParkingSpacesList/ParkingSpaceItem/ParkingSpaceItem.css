@@ -1,0 +1,26 @@
+.parking-spaces__item {
+  padding: 10px 20px;
+  border-bottom: 1px solid #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.parking-spaces__item:hover {
+  background-color: #a3a3a3;
+}
+
+.parking-spaces__item:last-of-type {
+  border: none;
+}
+
+.parking-spaces__item_active {
+  background-color: #a3a3a3;
+}
+
+.parking-spaces__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+}

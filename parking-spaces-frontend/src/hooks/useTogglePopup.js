@@ -2,9 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 
 function useTogglePopup() {
   const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState(null);
 
-  const handleOpenModal = useCallback(() => {
+  const handleOpenModal = useCallback(type => {
     setShowModal(true);
+    setModalType(type);
   }, []);
 
   const handleCloseModal = useCallback(() => {
@@ -40,7 +42,7 @@ function useTogglePopup() {
     };
   }, [handleCloseOverlayClick, handleEscClose]);
 
-  return { showModal, setShowModal, handleOpenModal, handleCloseModal };
+  return { showModal, modalType, setShowModal, handleOpenModal, handleCloseModal };
 }
 
 export default useTogglePopup;

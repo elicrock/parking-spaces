@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import './CreateParkingSpaceForm.css';
+import './ParkingSpaceEditForm.css';
 import { useForm } from 'react-hook-form';
-import useAddressSearch from '../../../hooks/useAddressSearch';
-import { useCreateParkingMutation } from '../../../Api/pakingSpacesApi';
+import useAddressSearch from '../../../../hooks/useAddressSearch';
+import { useUpdateParkingByIdMutation } from '../../../../Api/pakingSpacesApi';
+import { updateParkingSpaces } from '../../../../redux/parkingSpaces/parkingsSlice';
+import { useDispatch } from 'react-redux';
 
-function CreateParkingSpaceForm({ onClose, setSelectedSpace }) {
+function ParkingSpaceEditForm({ parkingSpace, onClose, setSelectedSpace }) {
   const {
     register,
     handleSubmit,
@@ -14,12 +16,14 @@ function CreateParkingSpaceForm({ onClose, setSelectedSpace }) {
     formState: { errors, isValid },
   } = useForm({ mode: 'all' });
 
-  const [createParking, { isLoading }] = useCreateParkingMutation();
+  const [updateParking, { isLoading }] = useUpdateParkingByIdMutation();
+  const dispatch = useDispatch();
 
   const [isSubmitError, setIsSubmitError] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [selectedAddressFromHint, setSelectedAddressFromHint] = useState('');
+  const [isAddressFocused, setIsAddressFocused] = useState(false);
 
   const watchAddress = watch('address') || '';
 
@@ -32,10 +36,26 @@ function CreateParkingSpaceForm({ onClose, setSelectedSpace }) {
   );
 
   useEffect(() => {
-    if (watchAddress) {
+    if (parkingSpace) {
+      const { name, address, latitude, longitude, maxPlaces, locationType, ownership, availability, schedule } =
+        parkingSpace;
+      setValue('name', name || '');
+      setValue('address', address || '');
+      setValue('maxPlaces', maxPlaces || '');
+      setValue('locationType', locationType || '');
+      setValue('ownership', ownership || '');
+      setValue('availability', availability || '');
+      setValue('schedule', schedule || '');
+      setLatitude(latitude || '');
+      setLongitude(longitude || '');
+    }
+  }, [parkingSpace, setValue]);
+
+  useEffect(() => {
+    if (isAddressFocused && watchAddress) {
       fetchAddress(watchAddress);
     }
-  }, [fetchAddress, watchAddress]);
+  }, [fetchAddress, isAddressFocused, watchAddress]);
 
   const handleHintAddressSelect = hintAddress => {
     setValue('address', hintAddress);
@@ -48,6 +68,10 @@ function CreateParkingSpaceForm({ onClose, setSelectedSpace }) {
     setShowHint(true);
   };
 
+  const handleAddressFocus = () => {
+    setIsAddressFocused(true);
+  };
+
   const onSubmit = async ({ name, address, maxPlaces, locationType, ownership, availability, schedule }) => {
     try {
       const data = {
@@ -57,13 +81,17 @@ function CreateParkingSpaceForm({ onClose, setSelectedSpace }) {
         locationType,
         ownership,
         availability,
-        schedule,
         latitude,
         longitude,
       };
 
-      await createParking(data).unwrap();
-      setSelectedSpace(null);
+      if (availability === 'Условно бесплатное') {
+        data.schedule = schedule;
+      }
+
+      const response = await updateParking({ id: parkingSpace._id, data }).unwrap();
+      dispatch(updateParkingSpaces(response));
+      setSelectedSpace(response);
       onClose();
     } catch (err) {
       console.log(err);
@@ -92,6 +120,7 @@ function CreateParkingSpaceForm({ onClose, setSelectedSpace }) {
         placeholder="Введите адрес парковочного пространства"
         value={watchAddress}
         onChange={handleAddressChange}
+        onFocus={handleAddressFocus}
         disabled={isLoading}
         {...register('address', {
           required: 'Поле обязательно для заполнения',
@@ -220,10 +249,10 @@ function CreateParkingSpaceForm({ onClose, setSelectedSpace }) {
       )}
       <span className={`form__error-submit ${isSubmitError ? 'form__error-submit_active' : ''}`}>{isSubmitError}</span>
       <button type="submit" className="form__submit-btn" disabled={!isValid || isLoading}>
-        {isLoading ? 'Создание' : 'Создать'}
+        {isLoading ? 'Сохранение' : 'Сохранить'}
       </button>
     </form>
   );
 }
 
-export default CreateParkingSpaceForm;
+export default ParkingSpaceEditForm;
